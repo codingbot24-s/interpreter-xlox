@@ -1,6 +1,8 @@
 
 #include <stdlib.h>
 #include "chunk.h"
+#include "memory.h"
+
 
 void init_chunk (Chunk *c) 
 {
@@ -14,18 +16,20 @@ void write_chunk (Chunk *c,uint8_t byte)
     if (c->capacity < c->count + 1)
     {
         int old_cap = c->capacity;
-        c->capacity = GROW_CAPACITY();
-        c->code =  GROW_ARRAY();
+        c->capacity = GROW_CAPACITY(old_cap);
+        c->code =  GROW_ARRAY(uint8_t,c->code,old_cap,c->capacity);
     }
     
     c->code[c->count] = byte;
     c->count++;    
 }
 
-
-
 void free_chunk(Chunk *c)
 {
-    //TODO: (saad) -> 
-    initChunk(c);
+    FREE_ARRAY(uint8_t,c->code,c->capacity);
+    init_chunk(c);
 }
+
+
+
+

@@ -6,5 +6,7 @@
 int main () 
 {
     Chunk c;
-    init_chunk(&c); 
+    init_chunk(&c);
+    riteChunk(&c, OP_RETURN);
+    freeChunk(&c);
 }
