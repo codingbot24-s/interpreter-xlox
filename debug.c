@@ -6,6 +6,7 @@ static int simpleInstruction (const char* name, int offset)
     printf("%s\n", name);
     return offset + 1;
 }
+
 void diassembleChunk(Chunk *c, const char *name)
 {
     printf("== %s ==\n", name); 
@@ -24,6 +25,7 @@ int disassembleInstruction(Chunk *c, int offset)
     {
     case OP_RETURN:
         return simpleInstruction("OP_RETURN", offset);
+        break;
     default:
       printf("Unknown opcode %d\n", instruction);
       return offset + 1;

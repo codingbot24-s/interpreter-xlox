@@ -8,7 +8,8 @@ void init_chunk (Chunk *c)
 {
     c->count = 0;
     c->capacity = 0;
-    c->code = NULL; 
+    c->code = NULL;
+    initValueArray(&c->constants);
 }
 
 void write_chunk (Chunk *c,uint8_t byte) 
@@ -24,9 +25,16 @@ void write_chunk (Chunk *c,uint8_t byte)
     c->count++;    
 }
 
+int addConstant(Chunk *c, Value value)
+{
+    writeValueArray(&c->constants,value);
+    return c->constants.count - 1;
+}
+
 void free_chunk(Chunk *c)
 {
     FREE_ARRAY(uint8_t,c->code,c->capacity);
+    freeValueArray(&c->constants);
     init_chunk(c);
 }
 
